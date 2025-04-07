@@ -11,10 +11,10 @@ ARG COMMIT_HASH
 ENV COMMIT_HASH=${COMMIT_HASH}
 
 # Copy the Maven build output (JAR file)
-COPY target/demo-0.0.1-SNAPSHOT.jar /app/demo.jar
+COPY target/spring-security-0.0.1-SNAPSHOT.jar spring-security.jar
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
 # Run the JAR file
-ENTRYPOINT ["java", "-jar", "demo.jar"]
+ENTRYPOINT ["java", "-jar", "spring-security.jar"]
