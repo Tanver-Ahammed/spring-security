@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -29,12 +30,19 @@ public class HomeController {
     }
 
     private String getHostName() {
-        return System.getenv("HOSTNAME");
+        try {
+            // Get hostname using InetAddress
+            return InetAddress.getLocalHost().getHostName();
+        } catch (IOException e) {
+            return "unknown";
+        }
     }
 
     private String getCommitHash() {
         try {
-            return new String(Files.readAllBytes(Paths.get(".git/HEAD"))).trim();
+            // Make sure the git directory is present when building the Docker image
+            String commitHash = new String(Files.readAllBytes(Paths.get(".git/refs/heads/main"))).trim();
+            return commitHash.length() > 0 ? commitHash : "unknown";
         } catch (IOException e) {
             return "unknown";
         }
