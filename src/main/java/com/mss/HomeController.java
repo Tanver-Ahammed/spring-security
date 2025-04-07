@@ -5,9 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.net.InetAddress;
-
 @RestController
 public class HomeController {
 
@@ -20,24 +17,21 @@ public class HomeController {
         return "Hello World";
     }
 
-    @GetMapping("/host")
     public String getInfo() {
-        String hostname = getHostName();
+        String vmHostname = getVmHostName();  // Fetch VM Hostname from env
         String commitHash = getCommitHash();
-        return "<h1>Hostname: " + hostname + "</h1><h2>Commit Hash: " + commitHash + "</h2>";
+        return "<h1>VM Hostname: " + vmHostname + "</h1><h2>Commit Hash: " + commitHash + "</h2>";
     }
 
-    private String getHostName() {
-        try {
-            return InetAddress.getLocalHost().getHostName();
-        } catch (IOException e) {
-            return "unknown";
-        }
+    // Fetch the VM Hostname from the environment variable
+    private String getVmHostName() {
+        String vmHostName = System.getenv("VM_HOSTNAME");  // Accessing the VM hostname passed to the container
+        return (vmHostName != null) ? vmHostName : "unknown";
     }
 
     private String getCommitHash() {
         String commitHash = System.getenv("COMMIT_HASH");
-        return commitHash != null ? commitHash : "unknown";
+        return (commitHash != null) ? commitHash : "unknown";
     }
 
 }
