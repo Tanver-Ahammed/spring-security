@@ -11,13 +11,8 @@ public class HomeController {
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
     @GetMapping
-    public String home() {
-        log.info("Home page started Info");
-        log.debug("Home page started Debug");
-        return "Hello World";
-    }
-
     public String getInfo() {
+        log.info("Hello World");
         String vmHostname = getVmHostName();  // Fetch VM Hostname from env
         String commitHash = getCommitHash();
         return "<h1>VM Hostname: " + vmHostname + "</h1><h2>Commit Hash: " + commitHash + "</h2>";
