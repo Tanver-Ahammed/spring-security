@@ -37,7 +37,7 @@ jobs:
           docker push tanverit16/spring-security:${GITHUB_SHA}
 
   deploy:
-    name: Deploy to 192.168.0.130
+    name: Deploy to 192.168.0.121, 122, 123
     runs-on: self-hosted  # Runner must be set up on 192.168.0.130
     needs: build
 
