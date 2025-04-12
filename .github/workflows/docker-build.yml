@@ -59,7 +59,7 @@ jobs:
 
       - name: Run Docker Container with VM_HOSTNAME Argument
         run: |
-          docker run -d \
+          sudo docker run -d \
             --name spring-app \
             -p 8080:8080 \
             tanverit16/spring-security:latest \
