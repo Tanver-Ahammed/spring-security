@@ -7,9 +7,6 @@ WORKDIR /app
 # Accept the build argument for the commit hash
 ARG COMMIT_HASH
 
-# Set the commit hash as an environment variable in the container
-ENV COMMIT_HASH=${COMMIT_HASH}
-
 # Copy the Maven build output (JAR file)
 COPY target/spring-security-0.0.1-SNAPSHOT.jar spring-security.jar
 
