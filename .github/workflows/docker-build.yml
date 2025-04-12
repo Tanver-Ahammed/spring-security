@@ -3,7 +3,7 @@ name: Build & Push Docker Image
 on:
   push:
     branches:
-      - main
+      - play
 
 jobs:
   build:
@@ -37,3 +37,30 @@ jobs:
         run: |
           docker push tanverit16/spring-security:${GITHUB_SHA}
           docker push tanverit16/spring-security:latest
+
+  deploy:
+    name: Deploy to 192.168.0.130
+    runs-on: self-hosted  # Runner must be set up on 192.168.0.130
+    needs: build
+
+    steps:
+      - name: Log in to DockerHub
+        run: |
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Pull Docker Image
+        run: |
+          docker pull tanverit16/spring-security:latest
+
+      - name: Stop and Remove Existing Container
+        run: |
+          docker stop spring-app || true
+          docker rm spring-app || true
+
+      - name: Run Docker Container with VM_HOSTNAME Argument
+        run: |
+          docker run -d \
+            --name spring-app \
+            -p 8080:8080 \
+            tanverit16/spring-security:latest \
+            --vm.hostname=$(hostname)
