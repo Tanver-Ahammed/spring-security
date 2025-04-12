@@ -15,7 +15,7 @@ public class HomeController {
         log.info("Hello World");
         String vmHostname = getVmHostName();  // Fetch VM Hostname from env
         String commitHash = getCommitHash();
-        return "<h1>VM Hostname is: " + vmHostname + "</h1><h2>Commit Hash is: " + commitHash + "</h2>";
+        return "<h1 style="color: red">VM Hostname is: " + vmHostname + "</h1><h2>Commit Hash is: " + commitHash + "</h2>";
     }
 
     // Fetch the VM Hostname from the environment variable
