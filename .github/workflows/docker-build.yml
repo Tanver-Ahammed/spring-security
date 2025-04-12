@@ -37,9 +37,12 @@ jobs:
           docker push tanverit16/spring-security:${GITHUB_SHA}
 
   deploy:
-    name: Deploy to 192.168.0.121, 122, 123
-    runs-on: self-hosted  # Runner must be set up on 192.168.0.130
+    name: Deploy to self-hosted runners
+    runs-on: ${{ matrix.runner }}
     needs: build
+    strategy:
+      matrix:
+        runner: [dsi-1, dsi-2, dsi-3]
 
     steps:
       - name: Log in to DockerHub
