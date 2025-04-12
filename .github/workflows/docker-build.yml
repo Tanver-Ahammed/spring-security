@@ -50,16 +50,16 @@ jobs:
 
       # - name: Pull Docker Image
       #   run: |
-      #     sudo docker pull tanverit16/spring-security:latest
+      #     docker pull tanverit16/spring-security:latest
 
       - name: Stop and Remove Existing Container
         run: |
-          sudo docker stop spring-app || true
-          sudo docker rm spring-app || true
+          docker stop spring-app || true
+          docker rm spring-app || true
 
       - name: Run Docker Container with VM_HOSTNAME Argument
         run: |
-          sudo docker run -d \
+          docker run -d \
             --name spring-app \
             -p 8080:8080 \
             tanverit16/spring-security:latest \
