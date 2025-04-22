@@ -5,6 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+
 @RestController
 public class HomeController {
 
@@ -16,7 +21,7 @@ public class HomeController {
         String vmHostname = getVmHostName();  // Fetch VM Hostname from env
         String commitHash = getCommitHash();
         return "<h1>VM Hostname is: <span style='color:red;'>" + vmHostname + "</span></h1>"
-         + "<h2>Commit Hash is: " + commitHash + "</h2>";
+                + "<h2>Commit Hash is: " + commitHash + "</h2>";
     }
 
     // Fetch the VM Hostname from the environment variable
