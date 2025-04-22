@@ -30,4 +30,22 @@ public class HomeController {
         return (commitHash != null) ? commitHash : "unknown";
     }
 
+    @GetMapping("/index")
+    @ResponseBody
+    public String home() throws IOException {
+        String gitRepo = "https://github.com/Tanver-Ahammed/spring-security.git";
+        ProcessBuilder builder = new ProcessBuilder("git", "ls-remote", gitRepo, "refs/heads/play");
+        Process process = builder.start();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line = reader.readLine();
+        String hash;
+        if (line != null && !line.isEmpty()) {
+            String[] parts = line.split("\\s+");
+            hash = parts[0];
+        } else {
+            hash = "No output from git ls-remote.";
+        }
+        return "<b>Host Name: </b>" + InetAddress.getLocalHost().getHostName() + "<br>" + "<b>Last commit Hash: </b>" + hash;
+    }
+
 }
