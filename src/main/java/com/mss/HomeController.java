@@ -39,10 +39,10 @@ public class HomeController {
     public String home() throws IOException {
         String gitRepo = "https://github.com/Tanver-Ahammed/spring-security.git";
         ProcessBuilder builder = new ProcessBuilder("git", "ls-remote", gitRepo, "refs/heads/play");
-        Process process = null;
         // Process process = builder.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line = reader.readLine();
+        // BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line = null;
+        // line = reader.readLine();
         String hash;
         if (line != null && !line.isEmpty()) {
             String[] parts = line.split("\\s+");
