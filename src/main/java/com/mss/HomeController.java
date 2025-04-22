@@ -31,7 +31,6 @@ public class HomeController {
     }
 
     @GetMapping("/index")
-    @ResponseBody
     public String home() throws IOException {
         String gitRepo = "https://github.com/Tanver-Ahammed/spring-security.git";
         ProcessBuilder builder = new ProcessBuilder("git", "ls-remote", gitRepo, "refs/heads/play");
