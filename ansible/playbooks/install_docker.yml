@@ -1,0 +1,46 @@
+---
+- name: Install Docker on Proxy Server
+  hosts: all
+  become: true # Run as root
+  tasks:
+    - name: Update apt package index
+      apt:
+        update_cache: yes
+
+    - name: Install dependencies to allow apt to use repositories over HTTPS
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+
+    - name: Add Docker’s official GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository for Ubuntu 24.02.2 (lunar)
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu lunar stable"
+        state: present
+
+    - name: Install Docker CE (Community Edition)
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Ensure Docker service is started and enabled
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Verify Docker installation
+      command: docker --version
+      register: docker_version
+
+    - name: Show Docker version to verify installation
+      debug:
+        msg: "Docker version installed: {{ docker_version.stdout }}"
